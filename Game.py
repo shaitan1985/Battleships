@@ -1,8 +1,12 @@
+from Field import Field
+from Ship import Ship
+
 class Game(object):
 
     def __init__(self):
-        self.menu = some_menu()
+        #self.menu = some_menu()
         self.field = Field()
+
         self.coords = self.field.get_new_coords()
 
 
@@ -26,9 +30,13 @@ class Game(object):
 
         while self.coords:
 
-            draw_all()
+            self.draw_all()
 
-            choice = input('Введите x,y: ').replace(" ").split(',')
-            choice.make_shot()
-            self.field.make_shot(self.coords.get(choice), choice)
+            # choice = input('Введите x,y: ').replace(" ").split(',')
+            # choice.make_shot()
+            # self.field.make_shot(self.coords.get(choice), choice)
+            self.coords = None
 
+
+new_game = Game()
+new_game.start()
