@@ -1,4 +1,5 @@
 from random import randint
+from itertools import combinations
 
 class Field(object):
 
@@ -14,25 +15,49 @@ class Field(object):
         self.matrix = matrix
 
 
-    def draw_field(self):
+    def draw_field(self, matrix=None):
         n = self.n
+        matrix = self.matrix if matrix is None else matrix
         t_str = " "
-        [print(t_str.join([str(self.matrix[j][i]) for j in range(n)]))
+        [print(t_str.join([str(matrix[j][i]) for j in range(n)]))
                                             for i in range(n)]
 
 
-    def locate_ship(matrix, n, level):
-        pos = randint(1)
+    def get_free_places(self):
+
         temp_mtr = [[matrix[i][j] for i in range(n)] for j in range(n)]
-        free = [(i, j) for i in range(n) for j in range(n) if matrix[i][j] == 0 ]
+
+        for i in
+
+        free = [(i, j) for i in range(n) for j in range(n) if self.matrix[i][j] == 0 ]
+
+        return free
+
+
+    def locate_ship(self, matrix, n, level):
+        pos = randint(0, 1)
+        temp_mtr = [[matrix[i][j] for i in range(n)] for j in range(n)]
+        free = get_free_places()
         x = (randint(1, n), randint(1, n))
+
         if x in free:
+            print(x)
             for k in range(level):
-                tmp_item = temp_mtr[x[0]+k],[x[1]] if pos else temp_mtr[x[0]],[x[1]+k]
+                col = x[0] if pos else x[0] + k
+                row = x[1] + k if pos else x[1]
+                print(col, row)
+                try:
+                    tmp_item = temp_mtr[col][row]
+                except IndexError:
+                        return False
+                print(tmp_item, '*********')
                 if tmp_item:
-                    return None
-                tmp_item = 1
-        matrix = temp_mtr
+                    return False
+                temp_mtr[col][row] = 1
+                print(temp_mtr[col][row])
+        self.draw_field(temp_mtr)
+        self.matrix = temp_mtr
+        self.draw_field(self.matrix)
         return True
 
 
@@ -41,12 +66,10 @@ class Field(object):
 
     def get_new_coords(self):
         n = self.n
-        matrix = self.matrix
         for i in range(1, 5):
             level, count = 5 - i, i
             while count:
-                print(matrix,'\n', n, level)
-                if self.locate_ship(matrix, n, level):
+                if self.locate_ship(self.matrix, n, level):
                     count -= 1
 
 
